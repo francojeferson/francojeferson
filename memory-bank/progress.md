@@ -7,6 +7,9 @@ and the evolution of project decisions.
 
 - A Python script (`scripts/scrape_explosm.py`) successfully scrapes the latest cartoon from Explosm.net and saves it as
   `latest_explosm_cartoon.jpg`.
+- Additional scripts (`scripts/scrape_pbfcomics.py` and `scripts/scrape_workchronicles.py`) successfully scrape cartoons
+  from PBF Comics and Work Chronicles, saving them as `latest_pbf_cartoon.jpg` and `latest_workchronicles_comic.png`
+  respectively.
 - The `README.md` file has been updated to display the latest cartoon with a humorous caption, enhancing project
   documentation.
 
@@ -18,8 +21,9 @@ and the evolution of project decisions.
 
 ## Current Status
 
-- The Explosm cartoon scraping feature is fully functional and integrated into the project's main documentation.
-- The project is in a stable state with the recent addition of the cartoon display in `README.md`.
+- The cartoon scraping features for Explosm.net, PBF Comics, and Work Chronicles are fully functional and integrated
+  into the project's main documentation.
+- The project is in a stable state with the recent addition of multiple cartoon displays in `README.md`.
 
 ## Known Issues
 

@@ -72,6 +72,6 @@
 [![Email](https://img.shields.io/badge/Email-jefersonfranco%40pm.me-gray?style=flat-square&logo=protonmail)](mailto:jefersonfranco@pm.me)
 [![Meet](https://img.shields.io/badge/Meet-jfranco.adm%40gmail.com-red?style=flat-square&logo=googlemeet)](mailto:jfranco.adm@gmail.com)
 
-## Latest PBF Cartoon
+## Latest Work Chronicles Comic
 
-![Latest PBF Cartoon](latest_pbf_cartoon.jpg)
+![Latest Work Chronicles Comic](latest_workchronicles_comic.png)

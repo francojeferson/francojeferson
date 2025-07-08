@@ -4,8 +4,8 @@ This file captures the current focus of work, recent changes, next steps, and ac
 
 ## Current Work Focus
 
-- Developing a Python script to scrape the latest cartoon from Explosm.net and integrating it into the project's
-  documentation.
+- Developing Python scripts to scrape the latest cartoons from multiple sources including Explosm.net, PBF Comics, and
+  Work Chronicles, and integrating them into the project's documentation.
 
 ## Recent Changes
 
