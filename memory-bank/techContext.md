@@ -2,101 +2,283 @@
 
 ## Technologies Used
 
-As of the initialization of the memory bank on June 30, 2025, the technical stack for "TELOS about Jeff" is primarily
-focused on the full-stack web development portfolio (PJT1), which is a key component of Goal 1 (G1). Other projects
-(PJT2 and PJT3) do not yet have finalized technical stacks but will be updated as they progress. Below is the proposed
-technology context for PJT1, with placeholders for future projects.
+"TELOS about Jeff" utilizes multiple technologies across its various projects. The primary focus is on the full-stack
+web development portfolio (PJT1), with supporting technologies for cartoon scraping and future projects. The technology
+stack is selected to balance accessibility for aspiring developers with robust functionality for professional
+deployment.
 
-### Full-Stack Web Development Portfolio (PJT1)
+### Active Projects
 
-- **Frontend**:
-  - **React.js**: A JavaScript library for building user interfaces, chosen for its popularity, extensive community
-    support, and component-based architecture, which simplifies development for beginners.
-  - **CSS Framework (Material-UI or Bootstrap)**: For responsive design and pre-built UI components to speed up frontend
-    development and ensure a professional look.
-  - **State Management (Redux or Context API)**: To manage application state, particularly for dynamic portfolio content
-    like project lists.
-- **Backend**:
-  - **Node.js**: A JavaScript runtime for server-side development, selected to maintain language consistency across the
-    stack, reducing the learning curve.
-  - **Express.js**: A lightweight web framework for Node.js, used to build RESTful APIs for managing portfolio data.
-- **Database**:
-  - **MongoDB**: A NoSQL database chosen for its flexibility with unstructured data, ideal for evolving portfolio
-    content. It integrates well with Node.js via libraries like Mongoose.
-  - **Mongoose**: An Object Data Modeling (ODM) library for MongoDB and Node.js, simplifying database interactions.
-- **Deployment & Hosting**:
-  - **Vercel or Netlify**: For frontend hosting, offering free tiers, easy deployment, and CI/CD integration.
-  - **Heroku or AWS**: For backend hosting, providing scalable solutions with free or low-cost options for learning
-    purposes.
-- **Testing**:
-  - **Jest**: For unit testing backend APIs, widely used in the JavaScript ecosystem.
-  - **React Testing Library**: For testing React components, focusing on user behavior simulation.
-- **Version Control**:
-  - **Git**: For source code management, essential for tracking changes and collaboration.
-  - **GitHub**: As a hosting platform for Git repositories, enabling portfolio publication and version control.
+#### Full-Stack Web Development Portfolio (PJT1)
+
+- **Frontend Technologies**:
+
+  - **React.js**: Core JavaScript library for building user interfaces
+
+    - Installation: `npx create-react-app portfolio-frontend`
+    - Key Features: Component-based architecture, hooks, virtual DOM
+    - Purpose: Create dynamic, interactive portfolio pages
+
+  - **Material-UI or Bootstrap**: UI component library for consistent design
+
+    - Material-UI: `@mui/material`, `@emotion/react`, `@emotion/styled`
+    - Bootstrap: `bootstrap`, `react-bootstrap`
+    - Purpose: Provide pre-built, responsive UI components
+
+  - **State Management**:
+
+    - Redux: For complex state management needs
+    - Context API: For simpler state requirements
+    - Installation: `npm install react-redux redux` or built into React
+
+  - **Testing Framework**:
+    - **React Testing Library**: For component testing
+    - **Jest**: For unit and integration tests
+    - Installation: `npm install --save-dev @testing-library/react @testing-library/jest-dom jest`
+
+- **Backend Technologies**:
+
+  - **Node.js**: JavaScript runtime environment
+
+    - Requirement: Version 16.x or higher
+    - Purpose: Execute server-side JavaScript code
+
+  - **Express.js**: Web application framework for Node.js
+
+    - Installation: `npm init -y && npm install express`
+    - Key Features: Routing, middleware integration, REST API creation
+
+  - **MongoDB & Mongoose**: Database and ODM
+
+    - MongoDB: NoSQL database for flexible data storage
+    - Mongoose: Object Data Modeling for MongoDB
+    - Installation: `npm install mongoose`
+    - Purpose: Store portfolio data, user information, and contact submissions
+
+  - **Authentication**:
+
+    - **JSON Web Tokens (JWT)**: For user authentication
+    - Installation: `npm install jsonwebtoken bcryptjs`
+    - Purpose: Secure API endpoints and user sessions
+
+  - **Environment Management**:
+    - **dotenv**: For managing environment variables
+    - Installation: `npm install dotenv`
+    - Purpose: Separate configuration from code
+
+- **Development & DevOps Tools**:
+
+  - **Git & GitHub**: Version control and repository hosting
+
+    - Purpose: Track changes, collaborate, and deploy from repository
+
+  - **ESLint & Prettier**: Code linting and formatting
+
+    - Installation: `npm install --save-dev eslint prettier eslint-config-prettier`
+    - Purpose: Maintain code quality and consistency
+
+  - **Nodemon**: For development server auto-restart
+    - Installation: `npm install --save-dev nodemon`
+    - Purpose: Streamline development workflow
+
+- **Deployment Technologies**:
+
+  - **Frontend Hosting**:
+
+    - **Vercel**: Serverless deployment platform
+    - **Netlify**: Static site hosting
+    - Purpose: Deploy React application with automatic builds and custom domains
+
+  - **Backend Hosting**:
+    - **Heroku**: Cloud platform for applications
+    - **AWS (Elastic Beanstalk)**: Scalable cloud hosting
+    - Purpose: Deploy Node.js/Express backend with environment variables
+
+#### Cartoon Scraping System
+
+- **Python**: Programming language for scraping scripts
+
+  - Version: Python 3.7+
+  - Purpose: Create web scrapers for cartoon content
+
+- **Requests HTTP Library**:
+
+  - Installation: `pip install requests`
+  - Purpose: Send HTTP requests to websites
+
+- **BeautifulSoup HTML Parser**:
+
+  - Installation: `pip install beautifulsoup4`
+  - Purpose: Parse and extract data from HTML
+
+- **Standard Libraries**:
+  - `os`: File and path operations
+  - Purpose: Save downloaded images to filesystem
+
+#### Future Projects (Planned)
+
+- **Digital Hygiene Checklist (PJT2)**:
+
+  - Technologies to be determined
+  - Potential: Google Sheets, Notion, static HTML, or simple mobile app
+
+- **Jiu-Jitsu Curriculum (PJT3)**:
+  - Technologies to be determined
+  - Potential: Static site generators, PDF tools, or content management systems
 
 ## Development Setup
 
-- **Environment**: Local development on a personal machine (Windows, macOS, or Linux) with Node.js installed (version
-  16.x or higher recommended for compatibility with modern packages).
-- **IDE**: Visual Studio Code (VSCode) as the primary editor, with extensions for JavaScript, React, and Git integration
-  (e.g., ESLint, Prettier, GitLens).
-- **Package Manager**: npm (Node Package Manager) for managing dependencies and scripts.
-- **Initial Setup Steps for PJT1**:
-  1. Install Node.js and npm.
-  2. Create a new React app using `npx create-react-app portfolio-frontend`.
-  3. Set up a basic Express server with `npm init -y` and `npm install express` in a separate `portfolio-backend`
-     directory.
-  4. Configure MongoDB locally or use a cloud service like MongoDB Atlas for database setup.
-  5. Initialize a Git repository and connect to GitHub for version control.
+### Local Development Environment
+
+1. **Prerequisites**:
+
+   - Node.js (16.x or higher)
+   - npm (comes with Node.js)
+   - Python 3.7+
+   - Git
+   - MongoDB (local installation or Atlas cloud account)
+
+2. **Portfolio Frontend Setup**:
+
+   ```bash
+   # Create new React app
+   npx create-react-app portfolio-frontend
+
+   # Navigate to project directory
+   cd portfolio-frontend
+
+   # Install dependencies
+   npm install
+   npm install material-ui @mui/icons-emotion @emotion/react @emotion/styled
+   npm install --save-dev nodemon eslint prettier
+
+   # Start development server
+   npm start
+   ```
+
+3. **Portfolio Backend Setup**:
+
+   ```bash
+   # Create backend directory
+   mkdir portfolio-backend
+   cd portfolio-backend
+
+   # Initialize npm project
+   npm init -y
+
+   # Install dependencies
+   npm install express mongoose dotenv jsonwebtoken bcryptjs cors
+   npm install --save-dev nodemon jest
+
+   # Create basic express server
+   # (code implementation needed here)
+   ```
+
+4. **Database Setup**:
+
+   - Option 1: Local MongoDB installation
+   - Option 2: MongoDB Atlas (cloud)
+     - Create account at mongodb.com
+     - Create new cluster
+     - Add IP to access list
+     - Create database user
+     - Get connection string
+
+5. **Environment Configuration**:
+   - Create `.env` file in root of each project
+   - Add variables like database connection strings, API keys, etc.
+
+### Project Structure
+
+```
+TELOS-about-Jeff/
+├── memory-bank/
+│   ├── projectbrief.md
+│   ├── productContext.md
+│   ├── activeContext.md
+│   ├── systemPatterns.md
+│   ├── techContext.md
+│   ├── progress.md
+│   ├── consolidated_learnings.md
+│   └── raw_reflection_log.md
+├── scripts/
+│   ├── scrape_explosm.py
+│   ├── scrape_pbfcomics.py
+│   └── scrape_workchronicles.py
+├── portfolio-frontend/        (to be created)
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── styles/
+│   │   └── index.js
+│   ├── public/
+│   └── package.json
+├── portfolio-backend/         (to be created)
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── models/
+│   │   ├── controllers/
+│   │   └── app.js
+│   ├── .env
+│   └── package.json
+├── latest_explosm_cartoon.jpg
+├── latest_pbf_cartoon.jpg
+├── latest_workchronicles_comic.png
+└── README.md
+```
 
 ## Technical Constraints
 
-- **Learning Curve**: Technologies are chosen to minimize complexity for aspiring developers. JavaScript is used across
-  the stack to avoid learning multiple languages initially.
-- **Cost**: Emphasis on free or low-cost tools (e.g., Vercel free tier, MongoDB Atlas free plan) to ensure accessibility
-  for individuals with limited resources.
-- **Scalability**: While initial projects are small-scale, the architecture (e.g., REST APIs, cloud hosting) allows for
-  scalability if the portfolio grows or attracts more traffic.
-- **Time**: Development must fit within personal time constraints, prioritizing quick setup and iterative progress over
-  complex setups.
+- **Learning Curve**: Technologies chosen minimize complexity for beginners while providing professional capabilities
+- **Cost Solutions**: Emphasis on free tiers (Vercel, Netlify, MongoDB Atlas, Heroku)
+- **Time Constraints**: Development organized into manageable phases to fit within personal time limits
+- **Resource Limitations**: Maximum utilization of free and open-source tools
+- **Scalability**: Architecture supports growth from small projects to more complex applications
 
-## Dependencies
+## Dependencies Management
 
-- **Frontend Dependencies for PJT1**:
-  - `react`, `react-dom`, `react-scripts` (core React libraries).
-  - Material-UI (`@mui/material`, `@emotion/react`, `@emotion/styled`) or Bootstrap (`bootstrap`, `react-bootstrap`) for
-    UI.
-  - Optional: `redux` or `react-redux` for state management.
-- **Backend Dependencies for PJT1**:
-  - `express` for server framework.
-  - `mongoose` for MongoDB interaction.
-  - Additional utilities like `dotenv` for environment variables, `cors` for cross-origin requests.
-- **Testing Dependencies**:
-  - `jest` for backend testing.
-  - `@testing-library/react`, `@testing-library/jest-dom` for frontend testing.
+- **Frontend**: `package.json` with npm for dependency management
+- **Backend**: `package.json` with npm for dependency management
+- **Scraping Scripts**: `requirements.txt` for Python dependencies (to be added)
+- **Version Consistency**: Semantic versioning approach across all projects
 
 ## Tool Usage Patterns
 
-- **Git Workflow**: Use feature branches for development (e.g., `feature/add-project-page`), commit often with
-  meaningful messages following conventional commits, and push to GitHub for backup and showcase.
-- **Development Iterations**: Follow an iterative approach—build a minimal viable feature (e.g., static project list),
-  test it, deploy it, then enhance (e.g., dynamic data from backend).
-- **Testing Practices**: Write tests alongside code development to ensure functionality. Focus on critical paths first
-  (e.g., project data retrieval).
-- **Deployment Frequency**: Deploy early and often to hosting platforms to validate setups and showcase progress, even
-  if it's just a static page initially.
+### Git Workflow
 
-## Future Projects (Placeholders)
+- Feature branch development: `git checkout -b feature/new-feature`
+- Regular commits: `git commit -m "feat: add new component"`
+- Push to remote: `git push origin feature/new-feature`
+- Merge requests for review
 
-- **Quarterly Digital Hygiene Checklist (PJT2)**:
-  - **Technologies**: Likely non-technical or minimal tech (e.g., Google Sheets, Notion, or a simple static HTML page
-    for checklists).
-  - **Setup**: To be determined based on format chosen.
-- **Personal Curriculum for Jiu-Jitsu and Emotional Intelligence (PJT3)**:
-  - **Technologies**: Potentially static site generators (e.g., Jekyll, Hugo) for a content-focused site, or document
-    tools like Markdown with PDF export.
-  - **Setup**: To be determined based on delivery method.
+### Development Workflow
 
-This tech context will be updated as projects evolve under "TELOS about Jeff", ensuring that the chosen technologies and
-setups align with the project's missions and goals.
+- **Frontend**: Component development with React Testing Library tests
+- **Backend**: API endpoint development with Jest tests
+- **Integration**: End-to-end testing of frontend-backend communication
+- **Documentation**: JSDoc comments for API endpoints
+
+### Deployment Process
+
+1. Test locally: `npm test`
+2. Build frontend: `npm run build`
+3. Push to Git repository
+4. Deploy to Vercel/Netlify (frontend) and Heroku/AWS (backend)
+
+## Security Considerations
+
+- **HTTPS**: Automatic HTTPS on deployment platforms
+- **Input Validation**: Implement for all form submissions and API inputs
+- **Helmet.js**: Security middleware for Express (to be added)
+- **Environmental Variables**: Store sensitive data in environment variables
+- **CORS**: Configure for cross-origin requests
+
+## Future Technology Considerations
+
+- **Containerization**: Docker for consistent environments
+- **CI/CD**: GitHub Actions for automated testing and deployment
+- **Monitoring**: Application performance tools (to be added)
+- **Analytics**: Usage tracking features (to be added)
+
+This tech context provides a comprehensive overview of the technologies used in "TELOS about Jeff" and will be updated
+as projects evolve and technologies mature.
