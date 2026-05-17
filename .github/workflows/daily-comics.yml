@@ -26,12 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Explosm scraper
-        run: python scripts/scrape_explosm.py
-
-      - name: Run PBF Comics scraper
-        run: python scripts/scrape_pbfcomics.py
-
       - name: Run Work Chronicles scraper
         run: python scripts/scrape_workchronicles.py
 
