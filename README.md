@@ -4,9 +4,12 @@
 ![LinkedIn](https://img.shields.io/badge/LinkedIn-jefersonfranco-blue?style=flat-square&logo=linkedin)
 ![Email](https://img.shields.io/badge/Email-jefersonfranco%40pm.me-gray?style=flat-square&logo=protonmail)
 
-👋 Hi! I'm Jeferson, a Full Stack Engineer with a passion for building high-performance, scalable web applications and
-leveraging AI/ML to deliver innovative solutions. I specialize in Python and JavaScript ecosystems, with a strong
-background in data engineering and cloud technologies.
+## Latest Work Chronicles Comic
+
+![Latest Work Chronicles Comic](latest_workchronicles_comic.png)
+
+👋 Hi! I'm Jeferson Franco, a Full Stack Engineer with 5+ years of expertise in designing, developing, and deploying
+high-performance, scalable web applications. I specialize in Python (FastAPI, Flask, Django REST), JavaScript (React.js, Node.js, TypeScript), and Go/Java. Passionate about leveraging AI/ML (LLMs, RAG, MCP) to deliver innovative solutions and automate complex workflows. Strong background in data engineering, cloud platforms (AWS, GCP), and microservices architecture.
 
 ## About Me
 
@@ -36,6 +39,8 @@ the forefront of emerging trends in web development and artificial intelligence.
 | -------------- | -------- | --------------------------- |
 | Python         | Advanced | FastAPI, Flask, Django REST |
 | Node.js        | Advanced | Express, NestJS             |
+| Go             | Advanced | Gin, Echo                   |
+| Java           | Advanced | Spring Boot                 |
 | APIs           | Advanced | REST, GraphQL, WebSocket    |
 | Async          | Advanced | Asyncio, Celery             |
 | Authentication | Advanced | OAuth, JWT, Firebase        |
@@ -49,6 +54,7 @@ the forefront of emerging trends in web development and artificial intelligence.
 | NLP              | Advanced | BERT, Llama, Claude, ChatGPT |
 | Data Processing  | Advanced | Pandas, PySpark, Dask        |
 | Vector DB        | Advanced | Chroma, FAISS, Pinecone      |
+| MCP Integration  | Advanced | LLM/RAG pipelines            |
 
 ### DevOps & Cloud
 
@@ -57,39 +63,70 @@ the forefront of emerging trends in web development and artificial intelligence.
 | Docker                 | Advanced     | Containerization, Compose  |
 | Kubernetes             | Intermediate | Orchestration, Helm        |
 | CI/CD                  | Advanced     | GitHub Actions, Jenkins    |
-| Cloud                  | Advanced     | AWS (S3, EC2, Lambda), GCP |
+| Cloud                  | Advanced     | AWS, GCP, Azure           |
 | Infrastructure as Code | Advanced     | AWS CDK, Terraform         |
 
 ## Professional Experience
 
+### Full Stack Engineer @ Cambridge Associates
+
+_Jul 2025 - Present (11 mos)_
+
+- Contributing to Performance Reporting initiative: modernizing portfolio setup and reporting workflows
+- Building React/TypeScript frontend with intuitive UX, integrating backend microservices
+- Implementing new UI components, optimizing data flows, and improving accessibility
+- Resulting in faster onboarding and more actionable insights for investment clients
+
 ### Full Stack Engineer (Freelance)
 
-_Feb 2025 - Present_
+_Feb 2025 - Jul 2025 (6 mos)_
 
 - Architected and developed full-stack solutions for NDA clients using React.js, Next.js, and Node.js
 - Implemented Retrieval-Augmented Generation (RAG) systems integrated with LLMs for customer support optimization
 - Designed robust RESTful and GraphQL APIs using FastAPI and Flask with JWT authentication
-- **Project Alpha**: Built FastAPI microservices handling >5,000 requests/min with PostgreSQL and Docker, achieving
-  99.9% uptime
+- **Project Alpha**: Built FastAPI microservices handling 5,000+ requests/min with PostgreSQL and Docker, achieving 99.9% uptime
 - Created automated ETL pipelines using Python and Apache Airflow for AWS infrastructure
+- Developed Flask-based CLI tools reducing manual processing time by 70%
 
 ### Full Stack Developer & Data Engineer @ Mtrix
 
-_Apr 2023 - Feb 2025_
+_Apr 2023 - Feb 2025 (1 yr 11 mos)_
 
-- Developed interactive data visualization dashboards for major brands (Nivea, Pepsico, Reckitt)
-- Led performance optimization efforts, reducing image sizes and optimizing queries
-- Contributed to a global component library with micro-frontend architecture
-- Authored Python ETL scripts orchestrating large datasets (50GB+ daily) for data warehousing
+- Developed interactive data visualization dashboards for Nivea, Pepsico, Reckitt using React.js, TypeScript, PostgreSQL, QlikSense
+- Led performance optimization: reduced Docker image sizes, optimized queries, frontend rendering with memoization/code splitting
+- Contributed to global component library with micro-frontend architecture and internationalization (i18n)
+- Authored Python ETL scripts (Prefect) processing 50GB+ daily data into data warehouse
+- Implemented automated testing frameworks (Jest, Playwright) to prevent regressions
 
 ### Full Stack Developer & Functional Analyst @ KTGroup
 
-_Mar 2022 - Apr 2023_
+_Mar 2022 - Apr 2023 (1 yr 2 mos)_
 
-- Designed and deployed web applications using Node.js and MongoDB
-- Architected backend services in Flask and FastAPI for international clients
-- Created Flask-based document processing API with OCR and LLM summarization
+- Designed and deployed web applications (Onergy, DocsIA) using Node.js and MongoDB
+- Architected backend services in Flask and FastAPI for ATC, Biogen clients
+- Created DocsIA: Flask-based document processing API with OCR, LLM summarization, Celery + Redis task queues
 - Participated in architectural decisions contributing to multi-million contract renewal
+- Promoted to Functional Analyst, translating business requirements to technical specifications
+- Mentored junior developers on API best practices and performance tuning
+
+### Full Stack Developer (Freelance)
+
+_Feb 2020 - Mar 2022 (2 yrs 2 mos)_
+
+- Developed and maintained web applications using PHP, WordPress, JavaScript, jQuery, React.js, Next.js, Vue.js
+- Transitioned internal tools from PHP/WordPress to Python Flask, improving maintainability and test coverage
+- Developed proprietary trading algorithms in Python and MQL5 for high-frequency strategies
+- Refactored server-side endpoints and database queries, improving page load times by 30% and SEO rankings by 40%
+- Implemented responsive designs for cross-device compatibility
+
+### Investment Advisor @ XP Inc.
+
+_Feb 2019 - Feb 2020 (1 yr 1 mo)_
+
+- Managed investment portfolios for individual and corporate clients
+- Developed proprietary trading algorithms in Python and MQL5 for high-frequency strategies
+- Prospected new investors, expanding client base significantly
+- Provided personalized consulting on various financial assets
 
 ## Featured Projects
 
@@ -111,25 +148,6 @@ _Mar 2022 - Apr 2023_
 - Implemented containerized services with Docker and PostgreSQL via SQLAlchemy
 - Achieved 99.9% uptime through proper error handling and monitoring
 
-## TELOS Framework
-
-### Problems
-
-- **P1:** Unemployment in software development for older, undereducated individuals
-- **P2:** Lack of awareness and control over digital footprint and privacy
-- **P3:** The dangerous blend of "dumb", "confident", and "proud" in human behavior
-
-### Missions
-
-- **M1:** Empower the next generation with valuable knowledge to prevent unemployment and foster economic independence
-- **M2:** Model and advocate for conscious digital exposure to protect personal freedom in a hyperconnected world
-- **M3:** Mentor self-awareness and humility through interdisciplinary practices like jiu-jitsu
-
-### Goals
-
-- **G1:** Complete a full-stack web development portfolio by December 2025
-- **G2:** Complete a privacy audit of all personal devices quarterly
-- **G3:** Develop a personal curriculum linking jiu-jitsu principles with emotional intelligence by October 2025
 
 ## Open Source & Community
 
@@ -158,7 +176,3 @@ _Mar 2022 - Apr 2023_
 ---
 
 "Empowering minds, guarding freedom, and mentoring humility for a more conscious generation."
-
-## Latest Work Chronicles Comic
-
-![Latest Work Chronicles Comic](latest_workchronicles_comic.png)
