@@ -1,0 +1,47 @@
+name: Daily Comics Scraper
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape-comics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Explosm scraper
+        run: python scripts/scrape_explosm.py
+
+      - name: Run PBF Comics scraper
+        run: python scripts/scrape_pbfcomics.py
+
+      - name: Run Work Chronicles scraper
+        run: python scripts/scrape_workchronicles.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest_explosm_cartoon.jpg latest_pbf_cartoon.jpg latest_workchronicles_comic.png
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "feat(comics): update daily comics [$(date +%Y-%m-%d)]"
+            git push
+          fi
