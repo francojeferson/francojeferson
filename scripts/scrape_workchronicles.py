@@ -8,12 +8,14 @@ and easy to understand for beginners learning web scraping with Python.
 import requests
 from bs4 import BeautifulSoup
 import os
+import re
 
 
-def get_latest_article_url():
+def get_article_urls(max_articles=10):
     """
-    Fetch the Work Chronicles Substack homepage and extract the URL of the latest article.
-    Returns the article URL as a string or None if extraction fails.
+    Fetch the Work Chronicles Substack archive page and extract article URLs.
+    Comic articles have '/p/comic-' in the URL path.
+    Returns a list of article URLs.
     """
     url = "https://workchronicles.substack.com/archive"
     headers = {
@@ -23,91 +25,34 @@ def get_latest_article_url():
     try:
         response = requests.get(url, headers=headers, timeout=10)
         if response.status_code != 200:
-            print(f"Failed to fetch homepage. Status code: {response.status_code}")
-            return None
+            print(f"Failed to fetch archive. Status code: {response.status_code}")
+            return []
 
         soup = BeautifulSoup(response.text, "html.parser")
-        # Look for the first article link in various possible sections
-        posts_section = None
-        for class_name in ["posts", "post-list", "content", "main-content", "archive"]:
-            posts_section = soup.find("div", class_=class_name)
-            if posts_section:
-                break
+        article_urls = []
 
-        if not posts_section:
-            # Try finding any div containing links with 'post' or 'comic' in the class or href
-            for div in soup.find_all("div"):
-                if any(
-                    "post" in c.lower() or "comic" in c.lower()
-                    for c in div.get("class", [])
-                ):
-                    posts_section = div
-                    break
-                links = div.find_all("a")
-                for link in links:
-                    if "href" in link.attrs and (
-                        "post" in link["href"].lower()
-                        or "comic" in link["href"].lower()
-                    ):
-                        posts_section = div
-                        break
-                if posts_section:
-                    break
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            if "/p/" in href and href not in article_urls:
+                full_url = href
+                if not href.startswith("http"):
+                    full_url = f"https://workchronicles.substack.com{href}"
+                article_urls.append(full_url)
 
-        if not posts_section:
-            print("Could not find posts section on homepage.")
-            # Debug: Print potential sections for diagnosis
-            divs = soup.find_all("div")[:5]  # Limit to first 5 for brevity
-            if divs:
-                print("Debug - Potential sections found:")
-                for i, div in enumerate(divs, 1):
-                    div_id = div.get("id", "No id")
-                    div_class = div.get("class", "No class")
-                    print(f"  {i}. id: {div_id}, class: {div_class}")
-            return None
-
-        # Try various class names for the post title/link
-        latest_post = None
-        for class_name in [
-            "post-preview-title",
-            "post-title",
-            "title",
-            "post-link",
-            "post",
-        ]:
-            latest_post = posts_section.find("a", class_=class_name)
-            if latest_post:
-                break
-
-        if not latest_post:
-            # Fallback to the first 'a' tag in the section that looks like a post link
-            links = posts_section.find_all("a")
-            for link in links:
-                if "href" in link.attrs and "/p/" in link["href"]:
-                    latest_post = link
-                    break
-
-        if latest_post and "href" in latest_post.attrs:
-            article_url = latest_post["href"]
-            if not article_url.startswith("http"):
-                article_url = f"https://workchronicles.substack.com{article_url}"
-            return article_url
-        else:
-            print("Could not find the latest article link on the homepage.")
-            return None
+        return article_urls[:max_articles]
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching homepage: {e}")
-        return None
+        print(f"Error fetching archive: {e}")
+        return []
     except Exception as e:
-        print(f"Unexpected error while parsing homepage: {e}")
-        return None
+        print(f"Unexpected error while parsing archive: {e}")
+        return []
 
 
 def get_comic_image_url(article_url):
     """
     Fetch the article page and extract the URL of the comic image.
-    Returns the image URL as a string or None if extraction fails.
+    Returns the image URL as a string or None if the article has no comic image.
     """
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -116,33 +61,59 @@ def get_comic_image_url(article_url):
     try:
         response = requests.get(article_url, headers=headers, timeout=10)
         if response.status_code != 200:
-            print(f"Failed to fetch article page. Status code: {response.status_code}")
+            print(f"  Failed to fetch article. Status code: {response.status_code}")
             return None
 
         soup = BeautifulSoup(response.text, "html.parser")
-        # Look for the comic image in the article content
-        content = soup.find("div", class_="body")
-        if not content:
-            print("Could not find article content.")
-            return None
 
-        comic_img = content.find("img")
-        if comic_img and "src" in comic_img.attrs:
-            img_url = comic_img["src"]
-            if "substackcdn.com" in img_url:
-                return img_url
-            else:
-                print("Found an image, but it doesn't seem to be the comic.")
-                return None
-        else:
-            print("Could not find the comic image in the article.")
-            return None
+        # Check JSON-LD for the image first (most reliable)
+        for script in re.findall(
+            r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>',
+            response.text,
+            re.DOTALL,
+        ):
+            import json
+            try:
+                data = json.loads(script)
+                images = data.get("image", [])
+                if images:
+                    if isinstance(images, list) and len(images) > 0:
+                        if isinstance(images[0], dict):
+                            img_url = images[0].get("url", "")
+                            if img_url and "substackcdn.com/image/fetch" in img_url:
+                                return img_url
+            except json.JSONDecodeError:
+                pass
+
+        # Fallback: look for the first image in the body content
+        body = soup.find("div", class_="body")
+        if not body:
+            for cls in ["post-body", "available-content", "entry-content"]:
+                body = soup.find("div", class_=cls)
+                if body:
+                    break
+
+        if body:
+            comic_img = body.find("img")
+            if comic_img and "src" in comic_img.attrs:
+                img_url = comic_img["src"]
+                if "substackcdn.com/image/fetch" in img_url:
+                    return img_url
+
+            # Check picture elements too (Substack often wraps images in <picture>)
+            picture = body.find("picture")
+            if picture:
+                img = picture.find("img")
+                if img and "src" in img.attrs and "substackcdn.com/image/fetch" in img["src"]:
+                    return img["src"]
+
+        return None
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching article page: {e}")
+        print(f"  Error fetching article: {e}")
         return None
     except Exception as e:
-        print(f"Unexpected error while parsing article page: {e}")
+        print(f"  Unexpected error while parsing article: {e}")
         return None
 
 
@@ -177,23 +148,34 @@ def download_image(img_url, output_filename):
 def main():
     """
     Main function to orchestrate the scraping and downloading process.
+    Iterates through archive articles until finding one with a comic image.
     """
     print("Starting script to scrape the latest Work Chronicles comic...")
 
-    article_url = get_latest_article_url()
-    if article_url:
-        print(f"Found latest article URL: {article_url}")
+    article_urls = get_article_urls(max_articles=15)
+    if not article_urls:
+        print("Failed to find any articles on the archive page.")
+        return
+
+    print(f"Found {len(article_urls)} articles. Searching for a comic...")
+
+    for i, article_url in enumerate(article_urls):
+        print(f"  [{i+1}/{len(article_urls)}] Checking: {article_url}")
         img_url = get_comic_image_url(article_url)
         if img_url:
             print(f"Found comic image URL: {img_url}")
             output_filename = "latest_workchronicles_comic.png"
             success = download_image(img_url, output_filename)
-            if not success:
+            if success:
+                print("Comic updated successfully.")
+                return
+            else:
                 print("Failed to download or save the image.")
+                return
         else:
-            print("Failed to extract the comic image URL from the article.")
-    else:
-        print("Failed to extract the latest article URL.")
+            print(f"  -> No comic image found in this article.")
+
+    print("Could not find any article with a comic image.")
 
     print("Script execution completed.")
 

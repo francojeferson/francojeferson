@@ -13,87 +13,38 @@ import os
 def get_latest_cartoon_url():
     """
     Fetch the Explosm.net homepage and extract the URL of the latest comic image.
+    The site uses Next.js with lazy-loaded images. The comic is the first <img> element
+    with a src matching 'static.explosm.net/<year>/' pattern.
     Returns the image URL as a string or None if extraction fails.
     """
-    # URL of the Explosm website
     url = "http://explosm.net"
 
-    # Set a user-agent to mimic a browser request, reducing the chance of being blocked
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
 
     try:
-        # Send HTTP GET request to the website
         response = requests.get(url, headers=headers, timeout=10)
-
-        # Check if the request was successful (status code 200)
         if response.status_code != 200:
             print(f"Failed to fetch webpage. Status code: {response.status_code}")
             return None
 
-        # Parse the HTML content using BeautifulSoup
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Find the latest comic image element
-        # Note: This selector might need adjustment if the website structure changes
-        # Trying to find the comic image by ID or class related to comics
-        comic_img = soup.find("img", id="main-comic")
-        if not comic_img:
-            # Fallback to searching for images in a comic container or with specific class
-            comic_container = soup.find("div", class_="comic-container") or soup.find(
-                "div", id="comic-container"
-            )
-            if comic_container:
-                comic_img = comic_container.find("img")
-            else:
-                # Last resort: look for any image with keywords related to comics or dates in the src
-                # Explosm might use naming conventions like 'comic', 'cnh', 'cyanide', or date patterns
-                for img in soup.find_all("img"):
-                    if "src" in img.attrs:
-                        src_lower = img["src"].lower()
-                        if any(
-                            keyword in src_lower
-                            for keyword in ["comic", "cnh", "cyanide", "daily", "strip"]
-                        ):
-                            comic_img = img
-                            break
-                        # Check for date patterns in the URL (e.g., '2023', '2024', etc.)
-                        elif any(
-                            year in src_lower for year in ["2023", "2024", "2025"]
-                        ):
-                            comic_img = img
-                            break
+        # Explosm uses Next.js with lazy-loaded images.
+        # The comic image URL starts with 'https://static.explosm.net/' followed by
+        # a date path like '2026/05/17114109/backstabbed.png'.
+        # Look for images with this pattern.
+        for img in soup.find_all("img"):
+            src = img.get("src", "")
+            if "static.explosm.net" in src:
+                # Match pattern: /YYYY/ in URL path (date-based comic images)
+                # and ends with .png
+                if any(f"/{year}/" in src for year in ["2022", "2023", "2024", "2025", "2026", "2027", "2028"]) and src.endswith(".png"):
+                    return src
 
-        if comic_img and "src" in comic_img.attrs:
-            # Ensure the src is a full URL
-            img_url = comic_img["src"]
-            if not img_url.startswith("http"):
-                img_url = (
-                    "http:" + img_url
-                    if img_url.startswith("//")
-                    else f"http://explosm.net{img_url}"
-                )
-            return img_url
-        else:
-            print(
-                "Could not find the latest comic image on the page. Website structure may have changed."
-            )
-            # Debug: Print potential image elements for diagnosis
-            images = soup.find_all("img")[:5]  # Limit to first 5 for brevity
-            if images:
-                print("Debug - Potential image elements found:")
-                for i, img in enumerate(images, 1):
-                    src = img.get("src", "No src")
-                    alt = img.get("alt", "No alt")
-                    img_id = img.get("id", "No id")
-                    img_class = img.get("class", "No class")
-                    print(
-                        f"  {i}. src: {src}, alt: {alt}, id: {img_id}, class: {img_class}"
-                    )
-            else:
-                print("Debug - No image elements found on the page.")
-            return None
+        print("Could not find the latest comic image on the page.")
+        return None
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching webpage: {e}")
