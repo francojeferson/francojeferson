@@ -1,0 +1,5 @@
+# Memory Bank - local development context
+.memory-bank/
+
+# Cline rules - local development context
+.clinerules/
