@@ -7,45 +7,63 @@ and easy to understand for beginners learning web scraping with Python.
 
 import requests
 from bs4 import BeautifulSoup
-import os
 import re
+import xml.etree.ElementTree as ET
+
+BASE_URL = "https://www.workchronicles.com"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+}
 
 
 def get_article_urls(max_articles=10):
     """
-    Fetch the Work Chronicles Substack archive page and extract article URLs.
-    Comic articles have '/p/comic-' in the URL path.
+    Fetch the Work Chronicles RSS feed and extract article URLs.
+    RSS feeds are less likely to be IP-blocked by Substack than
+    the archive page (which returns HTTP 403 from datacenter IPs).
     Returns a list of article URLs.
     """
-    url = "https://workchronicles.substack.com/archive"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-    }
-
+    rss_url = f"{BASE_URL}/feed"
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        response = requests.get(rss_url, headers=HEADERS, timeout=15)
         if response.status_code != 200:
-            print(f"Failed to fetch archive. Status code: {response.status_code}")
+            print(f"Failed to fetch RSS feed. Status code: {response.status_code}")
             return []
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        root = ET.fromstring(response.text)
         article_urls = []
+        ns = {"atom": "http://www.w3.org/2005/Atom"}
+        for item in root.iter("item"):
+            link = item.find("link")
+            if link is not None and link.text:
+                url = link.text.strip()
+                if "/p/" in url and url not in article_urls:
+                    article_urls.append(url)
+                    if len(article_urls) >= max_articles:
+                        break
+        # Also check Atom-style links (Substack uses <atom:link>)
+        if not article_urls:
+            for entry in root.iter("entry"):
+                link = entry.find("link")
+                if link is not None:
+                    href = link.get("href", "")
+                    if "/p/" in href and href not in article_urls:
+                        article_urls.append(href)
+                        if len(article_urls) >= max_articles:
+                            break
 
-        for a in soup.find_all("a", href=True):
-            href = a["href"]
-            if "/p/" in href and href not in article_urls:
-                full_url = href
-                if not href.startswith("http"):
-                    full_url = f"https://workchronicles.substack.com{href}"
-                article_urls.append(full_url)
-
-        return article_urls[:max_articles]
+        return article_urls
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching archive: {e}")
+        print(f"Error fetching RSS feed: {e}")
+        return []
+    except ET.ParseError as e:
+        print(f"Error parsing RSS XML: {e}")
         return []
     except Exception as e:
-        print(f"Unexpected error while parsing archive: {e}")
+        print(f"Unexpected error while parsing RSS: {e}")
         return []
 
 
