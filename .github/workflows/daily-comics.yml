@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   scrape-comics:
@@ -29,12 +28,14 @@ jobs:
       - name: Run Work Chronicles scraper
         run: python scripts/scrape_workchronicles.py
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v8
-        with:
-          title: "feat(comics): update daily comics [$(date +%Y-%m-%d)]"
-          body: "Automated PR to update daily comics"
-          branch: daily-comics-updates
-          base: main
-          labels: automated
-          commit-message: "feat(comics): update daily comics [$(date +%Y-%m-%d)]"
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest_workchronicles_comic.png
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "feat(comics): update daily comics [$(date +%Y-%m-%d)]"
+            git push
+          fi
