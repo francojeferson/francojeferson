@@ -6,6 +6,9 @@ updates:
       interval: "monthly"
     open-pull-requests-limit: 3
     groups:
+      seguranca:
+        applies-to: security-updates
+        patterns: ["*"]
       pip:
         patterns: ["*"]
         update-types: ["minor", "patch"]
@@ -18,5 +21,8 @@ updates:
       interval: "monthly"
     open-pull-requests-limit: 2
     groups:
+      seguranca:
+        applies-to: security-updates
+        patterns: ["*"]
       github-actions:
         patterns: ["*"]
