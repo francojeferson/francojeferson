@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v7
@@ -29,6 +31,8 @@ jobs:
         run: python scripts/scrape_workchronicles.py
 
       - name: Commit and push changes
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -37,5 +41,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "feat(comics): update daily comics [$(date +%Y-%m-%d)]"
-            git push
+            git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD
           fi

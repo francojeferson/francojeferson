@@ -7,7 +7,9 @@ and easy to understand for beginners learning web scraping with Python.
 
 import requests
 from bs4 import BeautifulSoup
+import os
 import re
+import sys
 import xml.etree.ElementTree as ET
 
 BASE_URL = "https://www.workchronicles.com"
@@ -16,6 +18,11 @@ HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
 }
+
+# What a real download looks like: PNG, or JPEG (one of the last 25 daily images was a JPEG saved under the .png name).
+# Anything else (an HTML error page, an empty body) must not overwrite the image.
+IMAGE_SIGNATURES = (b"\x89PNG\r\n\x1a\n", b"\xff\xd8\xff")
+MIN_IMAGE_BYTES = 20_000  # the last 25 daily images were all over 290 KB
 
 
 def get_article_urls(max_articles=10):
@@ -34,7 +41,6 @@ def get_article_urls(max_articles=10):
 
         root = ET.fromstring(response.text)
         article_urls = []
-        ns = {"atom": "http://www.w3.org/2005/Atom"}
         for item in root.iter("item"):
             link = item.find("link")
             if link is not None and link.text:
@@ -43,16 +49,6 @@ def get_article_urls(max_articles=10):
                     article_urls.append(url)
                     if len(article_urls) >= max_articles:
                         break
-        # Also check Atom-style links (Substack uses <atom:link>)
-        if not article_urls:
-            for entry in root.iter("entry"):
-                link = entry.find("link")
-                if link is not None:
-                    href = link.get("href", "")
-                    if "/p/" in href and href not in article_urls:
-                        article_urls.append(href)
-                        if len(article_urls) >= max_articles:
-                            break
 
         return article_urls
 
@@ -147,8 +143,15 @@ def download_image(img_url, output_filename):
         response = requests.get(img_url, headers=headers, timeout=10)
 
         if response.status_code == 200:
-            with open(output_filename, "wb") as f:
-                f.write(response.content)
+            body = response.content
+            if len(body) < MIN_IMAGE_BYTES or not body.startswith(IMAGE_SIGNATURES):
+                print(f"Refusing to save: {len(body)} bytes starting with {body[:8]!r} is not a usable PNG/JPEG image.")
+                return False
+            # Write beside the target, then rename, so a failed write cannot leave a half-written image.
+            tmp_filename = output_filename + ".tmp"
+            with open(tmp_filename, "wb") as f:
+                f.write(body)
+            os.replace(tmp_filename, output_filename)
             print(f"Successfully downloaded and saved image as {output_filename}")
             return True
         else:
@@ -167,13 +170,14 @@ def main():
     """
     Main function to orchestrate the scraping and downloading process.
     Iterates through archive articles until finding one with a comic image.
+    Exits with status 1 on every failure, so the workflow run fails instead of looking fine.
     """
     print("Starting script to scrape the latest Work Chronicles comic...")
 
     article_urls = get_article_urls(max_articles=15)
     if not article_urls:
         print("Failed to find any articles on the archive page.")
-        return
+        sys.exit(1)
 
     print(f"Found {len(article_urls)} articles. Searching for a comic...")
 
@@ -189,13 +193,12 @@ def main():
                 return
             else:
                 print("Failed to download or save the image.")
-                return
+                sys.exit(1)
         else:
             print(f"  -> No comic image found in this article.")
 
     print("Could not find any article with a comic image.")
-
-    print("Script execution completed.")
+    sys.exit(1)
 
 
 if __name__ == "__main__":
