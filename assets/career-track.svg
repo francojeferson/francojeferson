@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 112" width="1000" height="112" role="img" aria-labelledby="t d">
+  <title id="t">Career timeline, 2019 to now</title>
+  <desc id="d">Career timeline from 2019 to now. XP Inc., Feb 2019 to Feb 2020. Freelance web development, Feb 2020 to Mar 2022. KTGroup Technologies, Mar 2022 to Apr 2023. Mtrix, Apr 2023 to Feb 2025. Freelance for NDA clients, Feb 2025 to Jul 2025. GFT Technologies, Jul 2025 to present. Solid bars are employed roles, dashed bars are freelance work.</desc>
+  <style>
+    .lbl { font: 600 16px 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+    .sub { font: 500 11px 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+    .yr  { font: 500 12px ui-monospace, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace; fill: #8397B5; }
+    /* One reveal on load, left to right. The clip rect keeps its full width without CSS animation support. */
+    .wipe { animation: wipe 1.3s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes wipe { from { width: 0; } to { width: 1000px; } }
+    @media (prefers-reduced-motion: reduce) { .wipe { animation: none; } }
+  </style>
+  <defs>
+    <clipPath id="reveal"><rect class="wipe" x="0" y="0" width="1000" height="112"/></clipPath>
+  </defs>
+  <rect x=".5" y=".5" width="999" height="111" rx="14" fill="#0E1726" stroke="#22324C"/>
+  <g clip-path="url(#reveal)">
+    <rect x="36" y="22" width="116.5" height="44" rx="7" fill="#2F4A73"/>
+    <text class="lbl" x="94.2" y="44" dy=".36em" text-anchor="middle" fill="#EAF0F9">XP Inc.</text>
+    <rect x="157.2" y="22.8" width="241.3" height="42.5" rx="7" fill="none" stroke="#5E7AA3" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text class="lbl" x="277.9" y="44" dy=".36em" text-anchor="middle" fill="#B7C6DD">Freelance</text>
+    <rect x="403.3" y="22" width="124.3" height="44" rx="7" fill="#2F4A73"/>
+    <text class="lbl" x="465.4" y="44" dy=".36em" text-anchor="middle" fill="#EAF0F9">KTGroup</text>
+    <rect x="531.6" y="22" width="213.2" height="44" rx="7" fill="#2F4A73"/>
+    <text class="lbl" x="638.2" y="44" dy=".36em" text-anchor="middle" fill="#EAF0F9">Mtrix</text>
+    <rect x="749.6" y="22.8" width="43.9" height="42.5" rx="7" fill="none" stroke="#5E7AA3" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text class="sub" x="771.5" y="14" text-anchor="middle" fill="#B7C6DD">Freelance</text>
+    <path d="M805.2,22 H950 L964,44 L950,66 H805.2 A7,7 0 0 1 798.2,59 V29 A7,7 0 0 1 805.2,22 Z" fill="#F0B648"/>
+    <text class="lbl" x="874.1" y="44" dy=".36em" text-anchor="middle" fill="#0E1726">GFT</text>
+    <line x1="36" y1="75" x2="964" y2="75" stroke="#22324C"/>
+    <line x1="36" y1="75" x2="36" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="36" y="98" text-anchor="start">2019</text>
+    <line x1="144.6" y1="75" x2="144.6" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="144.6" y="98" text-anchor="middle">2020</text>
+    <line x1="263.1" y1="75" x2="263.1" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="263.1" y="98" text-anchor="middle">2021</text>
+    <line x1="381.5" y1="75" x2="381.5" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="381.5" y="98" text-anchor="middle">2022</text>
+    <line x1="500" y1="75" x2="500" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="500" y="98" text-anchor="middle">2023</text>
+    <line x1="618.5" y1="75" x2="618.5" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="618.5" y="98" text-anchor="middle">2024</text>
+    <line x1="736.9" y1="75" x2="736.9" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="736.9" y="98" text-anchor="middle">2025</text>
+    <line x1="855.4" y1="75" x2="855.4" y2="81" stroke="#5E7AA3"/>
+    <text class="yr" x="855.4" y="98" text-anchor="middle">2026</text>
+    <text class="yr" x="964" y="98" text-anchor="end" fill="#F0B648">now</text>
+  </g>
+</svg>
