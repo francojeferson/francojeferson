@@ -65,8 +65,8 @@ _Feb 2025 to Jul 2025. Remote._
 - Architected full-stack solutions with React.js, Next.js, and Node.js, and improved performance and scalability.
 - Led RAG systems with LLMs for customer support, from data collection and cleaning to preprocessing.
 - Designed REST and GraphQL APIs with FastAPI and Flask: OpenAPI schemas, JWT authentication.
-- **Project Alpha:** FastAPI microservices at 5,000+ requests/min on PostgreSQL (SQLAlchemy) and Docker, with 99.9% uptime.
-- Cut manual processing time by 70% with Flask CLI tools for data ingestion.
+- **Project Alpha:** FastAPI microservices on PostgreSQL (SQLAlchemy) and Docker.
+- Built Flask CLI tools for data ingestion that cut manual processing time.
 - Automated ETL pipelines with Python and Apache Airflow on AWS (S3, RDS, Lambda), with infrastructure as code (AWS CDK).
 
 ### Full Stack Developer and Data Engineer, Mtrix
@@ -100,7 +100,7 @@ _Feb 2020 to Mar 2022. Remote._
 - Built and maintained web applications with PHP, WordPress, JavaScript, jQuery, SQL, Tailwind CSS, Bootstrap, React.js, Next.js, and Vue.js.
 - Moved select internal tools from PHP and WordPress to Python Flask, which improved maintainability and test coverage.
 - Worked with ASP.NET MVC on integration and migration projects from WordPress to corporate environments.
-- Refactored server-side endpoints and database queries. Page load times improved by 30% and SEO rankings by 40%.
+- Refactored server-side endpoints and database queries, which improved page load times and SEO rankings.
 - Built responsive designs for all devices.
 
 #### Investment Advisor, XP Inc.
